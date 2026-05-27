@@ -11,16 +11,29 @@
 <body>
     <main>
         <div class="pomodoro-container">
-            <div class="break hidden">
-                Break
+            <div class="label-container">
+                <div id="label">
+                    FOCUS SESSION
+                </div>
             </div>
-            <div id="timer">
-                25:00
+            <div class="session-info">
+                Session <span id="session-num">1</span> of 4
+            </div>
+            <div class="session-dots">
+                <div class="dot" id="dot-1"></div>
+                <div class="dot" id="dot-2"></div>
+                <div class="dot" id="dot-3"></div>
+                <div class="dot" id="dot-4"></div>
+            </div>
+            <div class="timer-container">
+                <div id="timer">
+                    25:00
+                </div>
             </div>
             <div class="button-container">
                 <button class="start-button" id="start" onclick="clickingSound()">START</button>
-                <button class="pause-button" id="pause" onclick="clickingSound()">PAUSE</button>
-                <button class="restart-button" id="restart" onclick="clickingSound()">RESTART</button>
+                <button class="pause-button hidden" id="pause" onclick="clickingSound()">PAUSE</button>
+                <button class="restart-button hidden" id="restart" onclick="clickingSound()">RESTART</button>
             </div>
         </div>
     </main>
