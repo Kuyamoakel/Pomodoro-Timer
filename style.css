@@ -48,7 +48,7 @@ main {
     color: #F5EFE6;
     flex: 1;
     max-width: 100;
-    padding: 0.5rem;
+    padding: 0.8rem;
     border-radius: 5px;
     font-size: clamp(0.8rem, 3vw, 1.0rem);
     font-weight: 500;
@@ -86,7 +86,7 @@ main {
 .button-container button {
     flex: 1;
     max-width: 140px;
-    padding: 0.5rem 1rem;
+    padding: 0.8rem 1rem;
     border-radius: 5px;
     font-family: 'Fredoka', sans-serif;
     font-size: 1rem;
