@@ -25,14 +25,33 @@ main {
     margin-bottom: 2rem;
 }
 
-#label {
-    font-family: 'Cormorant Garamond', sans-serif;
-    color: #F4F1E8;
-    letter-spacing: 2px;
-    font-size: clamp(1.5rem, 5vw, 2rem);
-    opacity: 0.5;
-    line-height: 1;
-    margin-bottom: 1rem;
+.time-choices {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    width: 100%;
+}
+
+.time {
+    font-family: 'Fredoka', sans-serif;
+    background: #C17A52;
+    border: none;
+    color: whitesmoke;
+    flex: 1;
+    max-width: 120;
+    padding: 0.5rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.time:hover {
+    transform: scale(1.05);
+    background-color: #e29263;
 }
 
 .pomodoro-container {

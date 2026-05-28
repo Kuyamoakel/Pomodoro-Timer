@@ -5,15 +5,30 @@ const label = document.getElementById("label");
 const startButton = document.getElementById("start");
 const pauseButton = document.getElementById("pause");
 const restartButton = document.getElementById("restart");
+const time25 = document.getElementById("time-1");
+const time45 = document.getElementById("time-2");
+const time60 = document.getElementById("time-3");
+
 
 // sounds
 const clickSound = new Audio("assets/audio/Click-Gun.mp3");
 const NatureSound = new Audio("assets/audio/NatureSound.mp3");
 const timesUp = new Audio("assets/audio/times-up.mp3");
 
+let twentyFive = 25 * 60;
+let twentyBreak = 5 * 60;
 
-let timeleft = 25 * 60;
-let breakTime = 5 * 60;
+let fourtyFive = 45 * 60;
+let fourtyBreak = 10 * 60;
+
+let sixty = 60 * 60;
+let sixtyBreak = 15 * 60; 
+
+let focusMode = twentyFive;
+let breakMode = twentyBreak;
+
+let timeleft = focusMode;
+
 let interval = null;
 let isBreak = false;
 let sessionCount = 0;
@@ -64,6 +79,7 @@ function updateSessionDisplay() {
 }
 
 function updateTimer() {
+
     let minutes = Math.floor(timeleft / 60);
     let seconds = timeleft % 60;
 
@@ -78,7 +94,7 @@ function startTimer() {
 
     NatureSound.loop = true;
     NatureSound.play();
-    
+
     startButton.classList.add("start-hidden");
     unHideButtons();
 
@@ -113,8 +129,10 @@ function resetTimer() {
     pauseTimer();
     stopAllSounds();
     backStart();
+    
+    timeleft = focusMode;
     isBreak = false;
-    timeleft = 25 * 60;
+
     updateTimer();
 }
 
@@ -123,23 +141,58 @@ function switchMode() {
 
     if (isBreak) {
         sessionCount++;
-        timeleft = breakTime;
-        label.textContent = "BREAK TIME";
+
+        timeleft = breakMode;
+
         timesUp.play();
+
         updateSessionDisplay();
     } else {
         if (sessionCount >= 4) sessionCount = 0;
-        timeleft = 25 * 60;
-        label.textContent = "FOCUS SESSION";
-        
+
+        timeleft = focusMode;
+
         NatureSound.loop = true;
+
         NatureSound.currentTime = 0;
+
         NatureSound.play();
+        
         updateSessionDisplay();
     }
 
     updateTimer();
 }
+
+time25.addEventListener("click", () => {
+    focusMode = twentyFive;
+    breakMode = twentyBreak;
+
+    timeleft = focusMode;
+
+    pauseTimer();
+    updateTimer();
+});
+
+time45.addEventListener("click", () => {
+    focusMode = fourtyFive;
+    breakMode = fourtyBreak;
+
+    timeleft = focusMode;
+
+    pauseTimer();
+    updateTimer();
+});
+
+time60.addEventListener("click", () => {
+    focusMode = sixty;
+    breakMode = sixtyBreak;
+
+    timeleft = focusMode;
+    pauseTimer();
+    updateTimer();
+    updateSessionDisplay();
+});
 
 startButton.addEventListener("click", startTimer);
 pauseButton.addEventListener("click", pauseTimer);
