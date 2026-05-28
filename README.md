@@ -14,4 +14,4 @@ This is currently the first version of the project. It doesn’t have many featu
 ![Pomodoro V1.0](assets/images/v1.0.png)
 
 ## LIVE DEMO
-![Visit Website](https://kuyamoakel.github.io/PomodoroApp/)
+https://kuyamoakel.github.io/PomodoroApp/
