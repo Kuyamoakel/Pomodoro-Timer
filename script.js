@@ -1,7 +1,7 @@
 
 // variables
 const timer = document.getElementById("timer");
-const label = document.getElementById("label");
+const label = document.getElementById("labelMode");
 const startButton = document.getElementById("start");
 const pauseButton = document.getElementById("pause");
 const restartButton = document.getElementById("restart");
@@ -33,6 +33,8 @@ let interval = null;
 let isBreak = false;
 let sessionCount = 0;
 
+let endtime;
+
 function clickingSound() {
     clickSound.play();
 }
@@ -58,6 +60,26 @@ function hideButtons() {
 function backStart() {
     hideButtons();
     startButton.classList.remove("start-hidden");
+}
+
+function hideTimers() {
+    time25.classList.add("hidden");
+    time45.classList.add("hidden");
+    time60.classList.add("hidden");
+}
+
+function unhideTimers() {
+    time25.classList.remove("hidden");
+    time45.classList.remove("hidden");
+    time60.classList.remove("hidden");
+}
+
+function hideLabel() {
+    label.classList.add("hidden");
+}
+
+function unhideLabel() {
+    label.classList.remove("hidden");
 }
 
 function updateSessionDisplay() {
@@ -95,16 +117,22 @@ function startTimer() {
     NatureSound.loop = true;
     NatureSound.play();
 
+    hideTimers();
+    unhideLabel();
     startButton.classList.add("start-hidden");
     unHideButtons();
 
+    endtime = Date.now() + timeleft * 1000;
+
     interval = setInterval(() => {
 
-        timeleft--;
+        timeleft = Math.round((endtime - Date.now()) / 1000);
 
-        updateTimer();
-
+        
         if (timeleft <= 0) {
+            timeleft = 0;
+            updateTimer();
+
             clearInterval(interval);
             interval = null;
 
@@ -112,23 +140,35 @@ function startTimer() {
 
             switchMode();
             startTimer();
-        }
 
-    }, 1000)
+            return;
+        }
+        updateTimer();
+
+    }, 250);
 }
 
 function pauseTimer() {
     NatureSound.pause();
     NatureSound.currentTime = 0;
-    backStart();
+    
     clearInterval(interval);
     interval = null;
+
+    if (endtime !== undefined) {
+        timeleft = Math.round((endtime - Date.now()) / 1000);
+    }
+
+    backStart();
+    
 }
 
 function resetTimer() {
     pauseTimer();
     stopAllSounds();
     backStart();
+    unhideTimers();
+    hideLabel();
     
     timeleft = focusMode;
     isBreak = false;
@@ -143,20 +183,24 @@ function switchMode() {
         sessionCount++;
 
         timeleft = breakMode;
-
+        
         timesUp.play();
-
+        
+        label.textContent = "BREAK SESSION";
+        
         updateSessionDisplay();
     } else {
         if (sessionCount >= 4) sessionCount = 0;
-
+        
         timeleft = focusMode;
-
+        
         NatureSound.loop = true;
-
+        
         NatureSound.currentTime = 0;
-
+        
         NatureSound.play();
+        
+        label.textContent = "FOCUS SESSION";
         
         updateSessionDisplay();
     }
@@ -167,31 +211,25 @@ function switchMode() {
 time25.addEventListener("click", () => {
     focusMode = twentyFive;
     breakMode = twentyBreak;
-
-    timeleft = focusMode;
-
     pauseTimer();
+    timeleft = focusMode;
     updateTimer();
 });
 
 time45.addEventListener("click", () => {
     focusMode = fourtyFive;
     breakMode = fourtyBreak;
-
-    timeleft = focusMode;
-
     pauseTimer();
+    timeleft = focusMode;
     updateTimer();
 });
 
 time60.addEventListener("click", () => {
     focusMode = sixty;
     breakMode = sixtyBreak;
-
-    timeleft = focusMode;
     pauseTimer();
+    timeleft = focusMode;
     updateTimer();
-    updateSessionDisplay();
 });
 
 startButton.addEventListener("click", startTimer);
