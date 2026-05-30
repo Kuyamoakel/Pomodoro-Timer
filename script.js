@@ -135,7 +135,6 @@ function startTimer() {
 
         
         if (timeleft <= 0) {
-            showModal.classList.remove("hidden");
             timeleft = 0;
             updateTimer();
 
@@ -188,16 +187,26 @@ function switchMode() {
     if (isBreak) {
         sessionCount++;
 
-        timeleft = breakMode;
+        if (sessionCount == 2) {
+            alert("LET'S TAKE LONGER BREAK");
+            timeleft = focusMode * 2;
+            // plus 5 minutes
+        }
+        else {
+            timeleft = focusMode;
+        }
         
         timesUp.play();
         
+        showModal.classList.remove("hidden");
         label.textContent = "BREAK SESSION";
         
         updateSessionDisplay();
     } else {
+        alert("READY TO WORK AGAIN?!")
+
         if (sessionCount >= 4) sessionCount = 0;
-        
+
         timeleft = focusMode;
         
         NatureSound.loop = true;
